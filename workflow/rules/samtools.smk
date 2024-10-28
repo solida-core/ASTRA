@@ -17,7 +17,7 @@ rule merge:
     resources:
         tmpdir=config.get("paths").get("tmp_dir"),
     script:
-        "workflow/scripts/merge.py"
+        "../scripts/merge.py"
 
 rule index:
     input:

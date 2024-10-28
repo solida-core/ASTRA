@@ -11,7 +11,7 @@ rule call_variants:
         version=config.get("params").get("deepVariant").get("version"),
         outdir=resolve_results_filepath('calling', "{sample}"),
     singularity:
-        "docker://google/deepvariant:1.61"
+        "docker://google/deepvariant:1.6.1"
     log:
         resolve_logs_filepath('calling', "{sample}.log"),
     benchmark:
