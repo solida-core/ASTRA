@@ -51,4 +51,4 @@ required:
   - reheader
   - paths
   - resources
-  - paramas
+  - params
