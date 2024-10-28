@@ -31,6 +31,27 @@ def resolve_benchmarks_filepath(dirname, filename):
     path = os.path.join(config.get('paths').get('results_dir'), 'benchmarks', dirname)
     return resolve_single_filepath(path, filename)
 
+def resolve_envs_filepath(filename):
+    path = os.path.join(config.get('paths').get('workdir'), 'workflow', 'envs')
+    return resolve_single_filepath(path, filename)
+
+def resolve_scripts_filepath(filename):
+    path = os.path.join(config.get('paths').get('workdir'), 'workflow', 'scripts')
+    return resolve_single_filepath(path, filename)
+
+def tmp_path(path=""):
+    default_path = os.path.join(config.get('paths').get('results_dir'), 'tmp')
+    if path:
+        try:
+            os.makedirs(path)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                return default_path
+        return path
+    return default_path
+
+
+
 def expand_filepath(filepath):
     filepath = os.path.expandvars(os.path.expanduser(filepath))
     if not os.path.isabs(filepath):

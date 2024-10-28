@@ -5,7 +5,6 @@ reheader: config/reheader.tsv
 paths:
     workdir: "/path/to/workdir"
     results_dir: "/path/to/results_dir"
-    tmp_dir: "/path/to/tmp_dir"
 
 resources:
     reference: "/path/to/reference/reference_genome.fasta"

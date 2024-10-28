@@ -18,7 +18,7 @@ rule call_variants:
         resolve_benchmarks_filepath('calling', "{sample}.txt"),
     threads: conservative_cpu_count(reserve_cores=2,max_cores=99)
     resources:
-        tmpdir=config.get("paths").get("tmp_dir"),
+        tmpdir=temp_path(),
     shell:
         "/opt/deepvariant/bin/run_deepvariant "
         "--model_type={params.type} "
