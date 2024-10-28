@@ -59,8 +59,7 @@ def expand_filepath(filepath):
     return filepath
 
 def get_bams_by_sample(wildcards):
-    bams = units.loc[units['sample'] == wildcards.sample, 'bam'].tolist()
-    return " ".join(bams)
+    return units.loc[units['sample'] == wildcards.sample, 'bam'].tolist()
 
 def cpu_count():
     return multiprocessing.cpu_count()
