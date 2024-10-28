@@ -37,7 +37,7 @@ def resolve_scripts_filepath(filename):
     path = os.path.join(config.get('paths').get('workdir'), 'workflow', 'scripts')
     return resolve_single_filepath(path, filename)
 
-def tmp_path(path=""):
+def temp_path(path=""):
     default_path = os.path.join(config.get('paths').get('results_dir'), 'tmp')
     if path:
         try:
