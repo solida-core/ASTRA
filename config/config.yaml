@@ -1,0 +1,17 @@
+samples: config/samples.tsv
+units: config/units.tsv
+reheader: config/reheader.tsv
+
+paths:
+    workdir: "/path/to/workdir"
+    results_dir: "/path/to/results_dir"
+    tmp_dir: "/path/to/tmp_dir"
+
+resources:
+    reference: "/path/to/reference/reference_genome.fasta"
+    regions: "/path/to/reference/regions.bed"
+
+params:
+  deepVariant:
+    model_type: "WES"  # [WGS,WES,PACBIO,ONT_R104,HYBRID_PACBIO_ILLUMINA]
+  vep:

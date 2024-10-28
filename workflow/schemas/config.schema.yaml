@@ -1,0 +1,54 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+
+description: snakemake configuration file
+
+type: object
+
+properties:
+
+  samples:
+    type: string
+  units:
+    type: string
+  reheader:
+    type: string
+
+  paths:
+    type: object
+    properties:
+      workdir:
+        type: string
+      results_dir:
+        type: string
+      tmp_dir:
+        type: string
+
+    required:
+      - workdir
+      - results_dir
+      - tmp_dir
+
+  resources:
+    type: object
+    properties:
+      reference:
+        type: string
+      regions:
+        type: string
+
+  params:
+    type: object
+    deepVariant:
+      type: object
+      model_type:
+        type: string
+    vep:
+      type: object
+
+required:
+  - samples
+  - units
+  - reheader
+  - paths
+  - resources
+  - paramas
