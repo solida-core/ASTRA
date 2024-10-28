@@ -20,13 +20,10 @@ properties:
         type: string
       results_dir:
         type: string
-      tmp_dir:
-        type: string
 
     required:
       - workdir
       - results_dir
-      - tmp_dir
 
   resources:
     type: object

@@ -1,13 +1,13 @@
 
 rule merge:
     input:
-        lambda wildcards: get_bams_by_sample(wildcards),
+        bams=lambda wildcards: get_bams_by_sample(wildcards),
     output: 
-        resolve_results_filepath('reads', "{sample}.cram"),
+        bam=resolve_results_filepath('reads', "{sample}.cram"),
     params:
-        cmd="samtools",
-        genome=config.get("resources").get("reference"),
+        out=resolve_results_filepath('reads', "tmp.{sample}.cram"),
         output_fmt="CRAM",
+
     conda:
         resolve_envs_filepath("samtools.yaml")
     log:
@@ -17,8 +17,15 @@ rule merge:
     threads: conservative_cpu_count(reserve_cores=2,max_cores=99)
     resources:
         tmpdir=temp_path(),
-    script:
-        resolve_scripts_filepath("merge.py")
+    shell:
+        "samtools merge "
+        "-O {params.output_fmt} "
+        "--threads {threads} "
+        "-o {params.out} "
+        "{input.bams} "
+        ">& {log} "
+        "&& "
+        "mv {params.out} {output.bam} "
 
 rule index:
     input:

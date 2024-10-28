@@ -14,8 +14,6 @@ samples = pd.read_csv(config.get("samples"), sep='\t')
 units = pd.read_csv(config.get("units"), sep='\t')
 reheader = pd.read_csv(config.get("reheader"), sep='\t')
 
-
-
 def resolve_single_filepath(basepath, filename):
     return os.path.join(basepath, filename)
 
@@ -50,8 +48,6 @@ def tmp_path(path=""):
         return path
     return default_path
 
-
-
 def expand_filepath(filepath):
     filepath = os.path.expandvars(os.path.expanduser(filepath))
     if not os.path.isabs(filepath):
@@ -63,7 +59,8 @@ def expand_filepath(filepath):
     return filepath
 
 def get_bams_by_sample(wildcards):
-    return units.loc[units['sample'] == wildcards.sample, 'bam'].tolist()
+    bams = units.loc[units['sample'] == wildcards.sample, 'bam'].tolist()
+    return " ".join(bams)
 
 def cpu_count():
     return multiprocessing.cpu_count()
