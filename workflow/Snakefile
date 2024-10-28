@@ -16,15 +16,15 @@ rule all:
         expand(
             resolve_results_filepath('reads',
                 "{sample}.cram"),
-            sample=samples.reset_index().itertuples(),
+            sample=samples['sample'],
         ),
         expand(
             resolve_results_filepath('reads',
                 "{sample}.cram.crai"),
-            sample=samples.reset_index().itertuples(),
+            sample=samples['sample'],
         ),
         expand(
             resolve_results_filepath('calling',
                 "{sample}/{sample}.vcf.gz"),
-            sample=samples.reset_index().itertuples(),
+            sample=samples['sample'],
         ),

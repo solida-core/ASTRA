@@ -1,6 +1,6 @@
 rule merge:
     input:
-        lambda wildcards: get_bams_by_sample(wildcards, samples),
+        lambda wildcards: get_bams_by_sample(wildcards),
     output: 
         bam=resolve_results_filepath('reads', "{sample}.cram"),
     params:

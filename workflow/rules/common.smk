@@ -10,9 +10,11 @@ report: "../report/workflow.rst"
 
 validate(config, schema="../schemas/config.schema.yaml")
 
-samples = pd.read_table(config.get("samples"), index_col="sample")
-units = pd.read_table(config.get("units"), index_col=["unit"], dtype=str)
-reheader = pd.read_table(config.get("reheader"), index_col=["LIMS"], dtype=str)
+samples = pd.read_csv(config.get("samples"), sep='\t')
+units = pd.read_csv(config.get("units"), sep='\t')
+reheader = pd.read_csv(config.get("reheader"), sep='\t')
+
+
 
 def resolve_single_filepath(basepath, filename):
     return os.path.join(basepath, filename)
@@ -39,13 +41,8 @@ def expand_filepath(filepath):
         )
     return filepath
 
-def  get_units_by_sample(sample, label="units",):
-    return [ unit for unit in samples.loc[sample, [label]][0].split(",")]
-
-def get_bams_by_sample(wildcards, samples, label='bam'):
-    sample = wildcards.sample
-    _units = get_units_by_sample(sample)
-    return units.loc[_units, label].tolist()
+def get_bams_by_sample(wildcards):
+    return units.loc[units['sample'] == wildcards.sample, 'bam'].tolist()
 
 def cpu_count():
     return multiprocessing.cpu_count()
