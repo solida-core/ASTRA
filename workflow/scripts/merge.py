@@ -12,12 +12,10 @@ with open(snakemake.log[0], "w") as f:
             cmd.append('--reference')
             cmd.append(snakemake.params['genome'])
         cmd.append("-o")
-        out = "tmp.{}".format(snakemake.output[0])
-        cmd.append(out)
+        cmd.append(snakemake.output[0])
         for i in snakemake.input:
             cmd.append(i)
         run(cmd)
-        run(['mv', out, snakemake.output[0]])
     else:
         if snakemake.params['output_fmt'] == 'CRAM':
             _opt_ = '-C'
@@ -30,9 +28,7 @@ with open(snakemake.log[0], "w") as f:
             cmd.append('--reference')
             cmd.append(snakemake.params['genome'])
         cmd.append('-o')
-        out = "tmp.{}".format(snakemake.output[0])
-        cmd.append(out)
+        cmd.append(snakemake.output[0])
         cmd.append(snakemake.input[0])
         run(cmd)
-        run(['mv', out, snakemake.output[0]])
         run(['touch', '-h', snakemake.output[0]])
