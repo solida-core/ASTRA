@@ -1,5 +1,5 @@
 
-rule merge:
+rule preprocessing:
     input:
         bams=lambda wildcards: get_bams_by_sample(wildcards),
     output: 
@@ -18,7 +18,7 @@ rule merge:
     resources:
         tmpdir=temp_path(),
     script:
-        "../scripts/merge.py"
+        "../scripts/preprocessing.py"
 
 # rule index:
 #     input:
