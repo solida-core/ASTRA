@@ -9,6 +9,7 @@ configfile: "config/config.yaml"
 ##### load rules #####
 include: "rules/common.smk"
 include: "rules/preprocessing.smk"
+include: "rules/metrics.smk"
 include: "rules/calling.smk"
 
 rule all:
@@ -21,6 +22,11 @@ rule all:
         expand(
             resolve_results_filepath('reads',
                 "{sample}.cram.crai"),
+            sample=samples['sample'],
+        ),
+        expand(
+            resolve_results_filepath('metrics',
+                "{sample}.hsmetrics.dat"),
             sample=samples['sample'],
         ),
         expand(

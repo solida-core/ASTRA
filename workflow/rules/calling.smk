@@ -1,7 +1,7 @@
 rule call_variants:
     input:
-        bam=rules.merge.output,
-        bai=rules.index.output.bai
+        cram=rules.preprocessing.output.cram,
+        crai=rules.preprocessing.output.crai
     output:
         vcf=resolve_results_filepath('calling', "{sample}/{sample}.vcf.gz"),
     params:
@@ -23,7 +23,7 @@ rule call_variants:
         "/opt/deepvariant/bin/run_deepvariant "
         "--model_type={params.type} "
         "--ref={params.genome} "
-        "--reads={input.bam} "
+        "--reads={input.cram} "
         "--regions {params.regions} "
         "--output_vcf={output} "
         "--intermediate_results_dir {params.outdir} "
