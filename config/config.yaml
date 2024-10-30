@@ -12,5 +12,8 @@ resources:
 
 params:
   deepVariant:
-    model_type: "WES"  # [WGS,WES,PACBIO,ONT_R104,HYBRID_PACBIO_ILLUMINA]
+    model_type: "WES"  # options [WGS,WES,PACBIO,ONT_R104,HYBRID_PACBIO_ILLUMINA]
   vep:
+    resources: "/path/to/vep_resources"
+    reference_version: "hg19" # options [hg19,hg38] or [GRCh37, GRCh38]
+    cache_version: "106"

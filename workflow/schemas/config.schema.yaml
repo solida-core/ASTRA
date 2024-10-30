@@ -41,6 +41,12 @@ properties:
         type: string
     vep:
       type: object
+      resources:
+        type: string
+      reference_version:
+        type: string
+      cache_version:
+        type: string
 
 required:
   - samples

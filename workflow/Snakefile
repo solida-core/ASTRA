@@ -34,3 +34,13 @@ rule all:
                 "{sample}/{sample}.vcf.gz"),
             sample=samples['sample'],
         ),
+        expand(
+            resolve_results_filepath('annotation',
+                "{sample}/{sample}.annotated.vcf"),
+            sample=samples['sample'],
+        ),
+        expand(
+            resolve_results_filepath('annotation',
+                "{sample}/{sample}.annotated.tsv"),
+            sample=samples['sample'],
+        )

@@ -61,6 +61,12 @@ def expand_filepath(filepath):
 def get_bams_by_sample(wildcards):
     return units.loc[units['sample'] == wildcards.sample, 'bam'].tolist()
 
+def get_vep_genome_version(version=None):
+    version = version if version else config.get("params").get("vep").get("reference_version")
+    if version in ['hg19', 'hg38']:
+        return 'GRCh37' if version in 'hg19' else 'GRCh38'
+    return version
+
 def cpu_count():
     return multiprocessing.cpu_count()
 
