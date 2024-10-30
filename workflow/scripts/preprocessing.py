@@ -11,7 +11,7 @@ with open(snakemake.log[0], "w") as f:
         if 'genome' in snakemake.params:
             cmd.append('--reference')
             cmd.append(snakemake.params['genome'])
-        cmd.append("-o")
+        # cmd.append("-o")
         cmd.append(snakemake.output['cram'])
         for i in snakemake.input['bams']:
             cmd.append(i)
@@ -33,7 +33,7 @@ with open(snakemake.log[0], "w") as f:
         if snakemake.params['output_fmt'] == 'CRAM':
             cmd.append('--reference')
             cmd.append(snakemake.params['genome'])
-        cmd.append('-o')
+        # cmd.append('-o')
         cmd.append(snakemake.output['cram'])
         cmd.append(snakemake.input['bams'].pop())
         run(cmd)
