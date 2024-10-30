@@ -24,6 +24,7 @@ rule vep2vcf:
         "--assembly {params.genome_version} "
         "--cache --cache_version {params.cache_version} "
         "--offline --everything "
+        "--fork {threads}"
         "--vcf "
 
 rule vep2tsv:
@@ -52,4 +53,5 @@ rule vep2tsv:
         "--assembly {params.genome_version} "
         "--cache --cache_version {params.cache_version} "
         "--offline --everything "
+        "--fork {threads}"
         "--tsv "
