@@ -11,6 +11,7 @@ include: "rules/common.smk"
 include: "rules/preprocessing.smk"
 include: "rules/metrics.smk"
 include: "rules/calling.smk"
+include: "rules/annotation.smk"
 
 rule all:
     input:
