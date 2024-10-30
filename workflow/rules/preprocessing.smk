@@ -6,7 +6,6 @@ rule preprocessing:
         cram=resolve_results_filepath('reads', "{sample}.cram"),
         crai=resolve_results_filepath('reads',"{sample}.cram.crai"),
     params:
-        genome=config.get("resources").get("reference"),
         output_fmt="CRAM",
     conda:
         resolve_envs_filepath("samtools.yaml")
