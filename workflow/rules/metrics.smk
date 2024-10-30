@@ -30,9 +30,9 @@ rule CollectHsMetrics:
     conda:
         resolve_envs_filepath("gatk.yaml")
     log:
-        resolve_logs_filepath('metrics',"CollectHsMetrics.log"),
+        resolve_logs_filepath('metrics',"{sample}.CollectHsMetrics.log"),
     benchmark:
-        resolve_benchmarks_filepath('metrics',"CollectHsMetrics.txt"),
+        resolve_benchmarks_filepath('metrics',"{sample}.CollectHsMetrics.txt"),
     threads: conservative_cpu_count(reserve_cores=2,max_cores=99)
     resources:
         tmpdir=temp_path(),
