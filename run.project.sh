@@ -1,3 +1,5 @@
-# https://stackoverflow.com/questions/52742698/snakemake-docker-example-how-to-use-volumes
+#!/usr/bin bash
 
-# snakemake --use-singularity --singularity-args "-B /path/outside/container/:/path/inside/container/"
+
+
+snakemake --profile seixi --jobname "astra.{rulename}.{jobid}"

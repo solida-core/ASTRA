@@ -1,4 +1,4 @@
 channels:
   - bioconda
 dependencies:
-  - ensembl-vep=109.3
+  - ensembl-vep

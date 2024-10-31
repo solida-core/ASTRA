@@ -1,7 +1,7 @@
 rule call_variants:
     input:
-        cram=rules.preprocessing.output.cram,
-        crai=rules.preprocessing.output.crai
+        bam=rules.preprocessing.output.bam,
+        bai=rules.preprocessing.output.bai
     output:
         vcf=resolve_results_filepath('calling', "{sample}/{sample}.vcf.gz"),
     params:

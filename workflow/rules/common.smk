@@ -59,7 +59,8 @@ def expand_filepath(filepath):
     return filepath
 
 def get_bams_by_sample(wildcards):
-    return units.loc[units['sample'] == wildcards.sample, 'bam'].tolist()
+    bams = units.loc[units['sample'] == wildcards.sample, 'bam'].tolist()
+    return " ".join(bams)
 
 def get_vep_genome_version(version=None):
     version = version if version else config.get("params").get("vep").get("reference_version")

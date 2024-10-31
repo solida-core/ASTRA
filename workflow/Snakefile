@@ -17,12 +17,12 @@ rule all:
     input:
         expand(
             resolve_results_filepath('reads',
-                "{sample}.cram"),
+                "{sample}.bam"),
             sample=samples['sample'],
         ),
         expand(
             resolve_results_filepath('reads',
-                "{sample}.cram.crai"),
+                "{sample}.bam.bai"),
             sample=samples['sample'],
         ),
         expand(

@@ -3,10 +3,8 @@ rule preprocessing:
     input:
         bams=lambda wildcards: get_bams_by_sample(wildcards),
     output: 
-        cram=resolve_results_filepath('reads', "{sample}.cram"),
-        crai=resolve_results_filepath('reads',"{sample}.cram.crai"),
-    params:
-        output_fmt="CRAM",
+        bam=resolve_results_filepath('reads', "{sample}.bam"),
+        bai=resolve_results_filepath('reads',"{sample}.bam.bai"),
     conda:
         resolve_envs_filepath("samtools.yaml")
     log:
@@ -16,8 +14,15 @@ rule preprocessing:
     threads: conservative_cpu_count(reserve_cores=2,max_cores=99)
     resources:
         tmpdir=temp_path(),
-    script:
-        "../scripts/preprocessing.py"
+    shell:
+        "samtools merge "
+        "{output.bam} "
+        "{input.bams} "
+        "&& "
+        "samtools index "
+        "{output.bam} "
+    # script:
+    #     "../scripts/preprocessing.py"
 
 # rule index:
 #     input:
