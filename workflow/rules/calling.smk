@@ -10,8 +10,10 @@ rule call_variants:
         type=config.get("params").get("deepVariant").get("model_type"),
         version=config.get("params").get("deepVariant").get("version"),
         outdir=resolve_results_filepath('calling', "{sample}"),
-    singularity:
-        "docker://google/deepvariant:1.6.1"
+    # singularity:
+    #     "docker://google/deepvariant:1.6.1"
+    conda:
+        resolve_envs_filepath("deepVariant.yaml")
     log:
         resolve_logs_filepath('calling', "{sample}.log"),
     benchmark:
@@ -20,10 +22,11 @@ rule call_variants:
     resources:
         tmpdir=temp_path(),
     shell:
-        "/opt/deepvariant/bin/run_deepvariant "
+        # "/opt/deepvariant/bin/run_deepvariant "
+        "run_deepvariant "
         "--model_type={params.type} "
         "--ref={params.genome} "
-        "--reads={input.cram} "
+        "--reads={input.bam} "
         "--regions {params.regions} "
         "--output_vcf={output} "
         "--intermediate_results_dir {params.outdir} "

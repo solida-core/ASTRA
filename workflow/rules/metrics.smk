@@ -22,8 +22,8 @@ rule BedToIntervalList:
 
 rule CollectHsMetrics:
     input:
-        cram=rules.preprocessing.output.bam,
-        crai=rules.preprocessing.output.bai,
+        bam=rules.preprocessing.output.bam,
+        bai=rules.preprocessing.output.bai,
         ilist=rules.BedToIntervalList.output.ilist,
     output:
         metrics=resolve_results_filepath('metrics', "{sample}.hsmetrics.dat"),
@@ -40,5 +40,5 @@ rule CollectHsMetrics:
         "gatk CollectHsMetrics "
         "--BAIT_INTERVALS {input.ilist} "
         "--TARGET_INTERVALS {input.ilist} "
-        "--INPUT {input.cram} "
+        "--INPUT {input.bam} "
         "--OUTPUT {output.metrics} "
