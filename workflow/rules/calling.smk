@@ -21,6 +21,7 @@ rule call_variants:
     threads: conservative_cpu_count(reserve_cores=2,max_cores=99)
     resources:
         tmpdir=temp_path(),
+    localrule: True,
     shell:
         "/opt/deepvariant/bin/run_deepvariant "
         # "run_deepvariant "
