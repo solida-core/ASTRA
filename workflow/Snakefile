@@ -47,6 +47,7 @@ rule all:
             sample=samples['sample'],
         ),
         expand(
-            resolve_bam_delivery_filepath(sample),
-            sample=samples['sample'],
+            resolve_results_filepath('delivery',
+                "{Client}/{Client}.bam"),
+            Client=reheader.reset_index().itertuples(),
         )
