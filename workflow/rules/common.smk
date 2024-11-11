@@ -74,9 +74,9 @@ def conservative_cpu_count(reserve_cores=1, max_cores=8):
     cores = max_cores if cpu_count() > max_cores else cpu_count()
     return max(cores - reserve_cores, 1)
 
-def get_client_id_by_sample(sample)
-    return reheader.loc[reheader['LIMS'] == sample, 'Client']
+def get_client_id_by_sample(sample_id):
+    return reheader.loc[reheader['LIMS'] == sample_id, 'Client']
 
-def resolve_bam_delivery_filepath(sample):
-    client_id = get_client_id_by_sample(sample)
+def resolve_bam_delivery_filepath(sample_id):
+    client_id = get_client_id_by_sample(sample_id)
     return resolve_results_filepath("delivery",f"{client_id}/{client_id}.bam")

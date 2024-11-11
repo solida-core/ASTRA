@@ -12,6 +12,7 @@ include: "rules/preprocessing.smk"
 include: "rules/metrics.smk"
 include: "rules/calling.smk"
 include: "rules/annotation.smk"
+include: "rules/delivery.smk"
 
 rule all:
     input:
@@ -46,6 +47,6 @@ rule all:
             sample=samples['sample'],
         ),
         expand(
-            resolve_bam_delivery_filepath("{sample}"),
+            resolve_bam_delivery_filepath(sample),
             sample=samples['sample'],
         )
