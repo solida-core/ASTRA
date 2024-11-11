@@ -44,4 +44,8 @@ rule all:
             resolve_results_filepath('annotation',
                 "{sample}/{sample}.annotated.tsv"),
             sample=samples['sample'],
+        ),
+        expand(
+            resolve_bam_delivery_filepath("{sample}"),
+            sample=samples['sample'],
         )
