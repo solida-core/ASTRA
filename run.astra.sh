@@ -10,7 +10,7 @@ where:
     -p  snakemake parameters as \"--rerun-incomplete --dryrun --keep-going --profile label_of_cluster_profile\"
 "
 
-while getopts ':hc:p:w:s:' option; do
+while getopts ':h:p:' option; do
   case "$option" in
     h) echo "$usage"
        exit
@@ -34,21 +34,22 @@ shift $((OPTIND - 1))
 
 
 WORKDIR=$(pwd)
-CFGFILE="${WORKDIR}/config/config.yml"
+CFGFILE="${WORKDIR}/config/config.yaml"
 
-REFFILE=$(yq e '.resources.reference' "${CFGFILE}")
-BEDFILE=$(yq e '.resources.regions' "${CFGFILE}")
-OUTDIR=$(yq e '.paths.results_dir' "${CFGFILE}")
+REFFILE=$(yq -Y '.resources.reference' "${CFGFILE}")
+BEDFILE=$(yq -Y '.resources.regions' "${CFGFILE}")
+OUTDIR=$(yq -Y '.paths.results_dir' "${CFGFILE}")
 
 REFDIR=$(dirname "$REFFILE")
 BEDDIR=$(dirname "$BEDFILE")
+OUTDIR=$(dirname "$OUTDIR")
 
 snakemake \
   --use-conda \
   --use-apptainer \
-  --apptainer-args "--bind ${OUTDIR} --bind ${REFDIR} --bind ${BEDDIR} " \
+  --apptainer-args " --bind ${OUTDIR} --bind ${REFDIR} --bind ${BEDDIR} " \
   --printshellcmds \
-  --restart-times 3 \
+  --restart-times 1 \
   --latency-wait 120 \
   --jobname "astra.{rulename}.{jobid}" \
   ${SM_PARAMETERS}

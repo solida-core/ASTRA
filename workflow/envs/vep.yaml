@@ -1,4 +1,6 @@
 channels:
+  - conda-forge
   - bioconda
 dependencies:
-  - ensembl-vep
+  - ensembl-vep=109.3
+  - perl-compress-raw-zlib=2.202

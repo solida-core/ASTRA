@@ -54,4 +54,4 @@ rule vep2tsv:
         "--cache --cache_version {params.cache_version} "
         "--offline --everything "
         "--fork {threads} "
-        "--tsv "
+        "--tab "
