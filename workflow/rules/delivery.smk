@@ -44,8 +44,10 @@ rule delivery_calling:
 rule delivery_annotation:
     input:
         vcf=lambda wildcards: get_filepath_by_client_id(wildcards, folder="annotation", pattern="samplename/samplename.annotated.vcf"),
+        tsv=lambda wildcards: get_filepath_by_client_id(wildcards,folder="annotation",pattern="samplename/samplename.annotated.tsv"),
     output:
         vcf=temp(resolve_results_filepath('delivery',"{client}/{client}.annotated.vcf")),
+        tsv=resolve_results_filepath('delivery',"{client}/{client}.annotated.tsv"),
         gz=resolve_results_filepath('delivery',"{client}/{client}.annotated.vcf.gz"),
     params:
         header=resolve_results_filepath('delivery',"{client}/{client}.header.annotated.txt"),
@@ -64,5 +66,6 @@ rule delivery_annotation:
         "bcftools reheader -h {params.header} -o {output.vcf} {input.vcf} ; "
         "rm -f {params.header} ; "
         "bgzip -c {output.vcf} > {output.gz} ; "
-        "tabix -p vcf {output.gz} "
+        "tabix -p vcf {output.gz} ; "
+        "sed 's/{params.sample_id}/{wildcards.client}/g' {input.tsv} > {output.tsv} "
 
