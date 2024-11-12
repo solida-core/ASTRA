@@ -74,7 +74,7 @@ def conservative_cpu_count(reserve_cores=1, max_cores=8):
     cores = max_cores if cpu_count() > max_cores else cpu_count()
     return max(cores - reserve_cores, 1)
 
-def get_sample_id(client_id)
+def get_sample_id(client_id):
     return reheader.loc[reheader['Client'] == client_id, 'LIMS'].item()
 
 def get_filepath_by_client_id(wildcards, folder, pattern="samplename.ext"):

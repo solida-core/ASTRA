@@ -25,19 +25,19 @@ rule delivery_calling:
         vcf=resolve_results_filepath('delivery',"{client}/{client}.vcf.gz"),
     params:
         header=resolve_results_filepath('delivery',"{client}/{client}.header.calling.txt"),
-        sample_id=get_sample_id(wildcards.client),
+        sample_id=lambda wildcards: get_sample_id(wildcards.client),   
     conda:
         resolve_envs_filepath("samtools.yaml")
     log:
         resolve_logs_filepath('delivery_calling',"{client}.log"),
     benchmark:
-        resolve_benchmarks_filepath('delivery_bam',"{client}.txt"),
+        resolve_benchmarks_filepath('delivery_calling',"{client}.txt"),
     threads: conservative_cpu_count(reserve_cores=2,max_cores=99)
     resources:
         tmpdir=temp_path(),
     shell:
         "bcftools view -h {input.vcf} | sed \"s/{params.sample_id}/{wildcards.client}/g\" > {params.header} ; "
-        "bcftools reheader -h header.txt -o {output.vcf} {input.vcf} ; "
+        "bcftools reheader -h {params.header} -o {output.vcf} {input.vcf} ; "
         "rm -f {params.header} ; "
         "tabix -p vcf {output.vcf} "
 
@@ -49,7 +49,7 @@ rule delivery_annotation:
         gz=resolve_results_filepath('delivery',"{client}/{client}.annotated.vcf.gz"),
     params:
         header=resolve_results_filepath('delivery',"{client}/{client}.header.annotated.txt"),
-        sample_id=get_sample_id(wildcards.client),
+        sample_id=lambda wildcards: get_sample_id(wildcards.client),   
     conda:
         resolve_envs_filepath("samtools.yaml")
     log:
@@ -61,8 +61,8 @@ rule delivery_annotation:
         tmpdir=temp_path(),
     shell:
         "bcftools view -h {input.vcf} | sed \"s/{params.sample_id}/{wildcards.client}/g\" > {params.header} ; "
-        "bcftools reheader -h header.txt -o {output.vcf} {input.vcf} ; "
+        "bcftools reheader -h {params.header} -o {output.vcf} {input.vcf} ; "
         "rm -f {params.header} ; "
         "bgzip -c {output.vcf} > {output.gz} ; "
-        "tabix -p vcf {outputgz} "
+        "tabix -p vcf {output.gz} "
 

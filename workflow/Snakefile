@@ -50,4 +50,14 @@ rule all:
             resolve_results_filepath('delivery',
                 "{client}/{client}.bam"),
             client=reheader['Client'],
-        )
+        ),
+        expand(
+            resolve_results_filepath('delivery',
+                "{client}/{client}.vcf.gz"),
+            client=reheader['Client'],
+        ),
+        expand(
+            resolve_results_filepath('delivery',
+                "{client}/{client}.annotated.vcf.gz"),
+            client=reheader['Client'],
+        ),
