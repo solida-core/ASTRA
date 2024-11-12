@@ -6,7 +6,6 @@ import multiprocessing
 import psutil
 import re
 from snakemake.utils import validate
-from ufoLib2.converters import structure
 
 report: "../report/workflow.rst"
 
@@ -15,7 +14,6 @@ validate(config, schema="../schemas/config.schema.yaml")
 samples = pd.read_csv(config.get("samples"), sep='\t')
 units = pd.read_csv(config.get("units"), sep='\t')
 reheader = pd.read_csv(config.get("reheader"), sep='\t')
-reheader = reheader[reheader["LIMS"].isin(samples.index.values)]
 
 def resolve_single_filepath(basepath, filename):
     return os.path.join(basepath, filename)
@@ -78,5 +76,7 @@ def conservative_cpu_count(reserve_cores=1, max_cores=8):
     return max(cores - reserve_cores, 1)
 
 def get_sample_by_client(wildcards, reheader, folder, filename):
+    sample_id = reheader.loc[reheader['Client'] == wildcards.client, 'LIMS']
     filepath = resolve_results_filepath(folder, filename)
-    return re.sub(f"{sample}", reheader.loc[wildcards.Client, 'LIMS'], filepath)
+    return re.sub(f"{sample}", sample_id, filepath)
+

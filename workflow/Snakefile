@@ -48,6 +48,6 @@ rule all:
         ),
         expand(
             resolve_results_filepath('delivery',
-                "{Client}/{Client}.bam"),
-            Client=reheader.reset_index().itertuples(),
+                "{client}/{client}.bam"),
+            client=reheader['Client'],
         )
