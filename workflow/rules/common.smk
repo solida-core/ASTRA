@@ -4,7 +4,6 @@ import pandas as pd
 import os
 import multiprocessing
 import psutil
-import re
 from snakemake.utils import validate
 
 report: "../report/workflow.rst"
@@ -75,8 +74,10 @@ def conservative_cpu_count(reserve_cores=1, max_cores=8):
     cores = max_cores if cpu_count() > max_cores else cpu_count()
     return max(cores - reserve_cores, 1)
 
-def get_sample_by_client(wildcards, reheader, folder, filename):
-    sample_id = reheader.loc[reheader['Client'] == wildcards.client, 'LIMS']
-    filepath = resolve_results_filepath(folder, filename)
-    return re.sub(f"{sample}", sample_id, filepath)
+def get_sample_by_client(wildcards, folder, pattern="samplename.ext"):
+    sample_id = reheader.loc[reheader['Client'] == wildcards.client, 'LIMS'].item()
+    filepath = resolve_results_filepath(folder, pattern.replace("samplename", sample_id))
+    return filepath
+
+
 

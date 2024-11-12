@@ -1,6 +1,6 @@
 rule delivery_bam:
     input:
-        bam=lambda wildcards: get_sample_by_client(wildcards, folder="reads", filename="{sample}.bam"),
+        bam=lambda wildcards: get_sample_by_client(wildcards, folder="reads", pattern="samplename.bam"),
     output:
         bam=resolve_results_filepath('delivery',"{client}/{client}.bam"),
     conda:
@@ -14,7 +14,7 @@ rule delivery_bam:
         tmpdir=temp_path(),
     shell:
         "samtools view -H {input.bam}  | "
-        "sed \"s/SM:[^\t]*/SM:{client}/g\" | "
+        "sed \"s/SM:[^\t]*/SM:{wildcards.client}/g\" | "
         "samtools reheader - {input.bam} > {output.bam} "
         "&& "
         "samtools index "
