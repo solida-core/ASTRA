@@ -69,3 +69,19 @@ rule delivery_annotation:
         "tabix -p vcf {output.gz} ; "
         "sed 's/{params.sample_id}/{wildcards.client}/g' {input.tsv} > {output.tsv} "
 
+rule delivery_metrics:
+    input:
+        dat=lambda wildcards: get_filepath_by_client_id(wildcards,folder="metrics",pattern="samplename.hsmetrics.dat"),
+    output:
+        dat=resolve_results_filepath('delivery',"{client}/{client}.hsmetrics.dat"),
+    conda:
+        resolve_envs_filepath("rsync.yaml")
+    log:
+        resolve_logs_filepath('delivery_metrics',"{client}.log"),
+    benchmark:
+        resolve_benchmarks_filepath('delivery_metrics',"{client}.txt"),
+    threads: conservative_cpu_count(reserve_cores=2,max_cores=99)
+    resources:
+        tmpdir=temp_path(),
+    shell:
+        "rsync -az {input.dat} {output.dat} "

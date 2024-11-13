@@ -66,3 +66,8 @@ rule all:
                 "{client}/{client}.annotated.tsv"),
             client=reheader['Client'],
         ),
+        expand(
+            resolve_results_filepath('delivery',
+            "{client}/{client}.hsmetrics.dat"),
+            client=reheader['Client'],
+        ),
