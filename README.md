@@ -19,39 +19,61 @@ developed and manteined at [CRS4](https://www.crs4.it).
 ## Usage
 
 The usage of this workflow is described in the 
-[Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog?usage=solida-core/diva).
+[Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog?usage=solida-core/astra).
 
 If you use this workflow in a paper, 
 don't forget to give credits to the authors by citing the URL of this (original) repository and its DOI (see above).
 
-## INSTRUCTIONS
-Create a virtual environment with the command:
+## Quick Start
+
+### Creating the Conda Environment
+To create a virtual environment, use the following command:
+
 ```commandline
-mamba create -c bioconda -c conda-forge --name snakemake snakemake=8.10 snakedeploy
+mamba create -c bioconda -c conda-forge --name snakemake snakemake=8.25 snakedeploy
 ```
-and activate it:
+
+Activate the environment with:
 ```commandline
 conda activate snakemake
 ```
 
-We get some public data to test the pipeline. You can directly clone in this folder from github, just type:
+### Installation of Prerequisites
+Install the required prerequisites by running:
+
 ```commandline
-git clone https://github.com/solida-core/test-data-DNA.git
+mamba install snakemake-executor-plugin-drmaa=0.1.5  # Required for DRMAA cluster execution
+mamba install apptainer=1.3.0                        # Container runtime
+mamba install yq=3.4.3                               # YAML processor
 ```
-You can then perform the pipeline deploy defining a directory `my_work_dir` for analysis output and a pipeline tag for a specific version:
+
+### Deployment of Astra
+Deploy the pipeline by specifying an output directory `my_work_dir` and a pipeline tag or branch:
+
 ```bash
-snakedeploy deploy-workflow https://github.com/solida-core/astra 
-                    /path/to/my_work_dir 
-                    --tag XXXX
+snakedeploy deploy-workflow https://github.com/solida-core/astra \
+                            /path/to/my_work_dir \
+                            --branch master  # or use --tag <version>
 ```
-To run the pipeline, go inside the deployed pipeline folder and use the command:
+
+### Running Astra
+Before running the pipeline, ensure that you edit the configuration files located in the `./config/` directory:
+
+- `config.yaml`: Main configuration file for setting pipeline parameters.
+- `samples.tsv`: A table listing the samples included in the analysis.
+- `units.tsv`: Details about the technical units associated with each sample.
+- `reheader.tsv`: Optional file for reheadering sample identifiers.
+
+Refer to the [Configuration Details](#configuration-details) section for a comprehensive guide on editing these files.
+
+Once the configuration files are correctly set up, navigate to the deployed pipeline directory and execute the pipeline with:
+
 ```bash
 snakemake --use-conda -p --cores all
 ```
-You can generate analysis report with the command:
+### Generating a Report
+To create a comprehensive analysis report, use the command:
+
 ```bash
 snakemake --report report.zip --cores all
 ```
-
-
-
