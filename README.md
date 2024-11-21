@@ -30,7 +30,7 @@ don't forget to give credits to the authors by citing the URL of this (original)
 To create a virtual environment, use the following command:
 
 ```commandline
-mamba create -c bioconda -c conda-forge --name snakemake snakemake=8.25 snakedeploy
+mamba create -c bioconda -c conda-forge --name snakemake snakemake=8.25 apptainer=1.3.0 snakedeploy
 ```
 
 Activate the environment with:
@@ -38,14 +38,18 @@ Activate the environment with:
 conda activate snakemake
 ```
 
-### Installation of Prerequisites
-Install the required prerequisites by running:
+### Installation of Optional Prerequisites
 
-```commandline
-mamba install snakemake-executor-plugin-drmaa=0.1.5  # Required for DRMAA cluster execution
-mamba install apptainer=1.3.0                        # Container runtime
-mamba install yq=3.4.3                               # YAML processor
+The following prerequisites are optional and may be installed based on your workflow requirements:
+
+```bash
+mamba install snakemake-executor-plugin-drmaa=0.1.5  # Optional: For DRMAA cluster execution. Replace with your preferred Snakemake executor plugin (see: https://snakemake.github.io/snakemake-plugin-catalog/plugins/executor/).
+mamba install yq=3.4.3  # Optional: Required only if you plan to use the launcher `run.astra.sh`.
 ```
+
+#### Notes:
+- **Snakemake Executor Plugins**: The `snakemake-executor-plugin-drmaa` plugin is an example for DRMAA cluster execution. You can replace it with another executor plugin of your choice. See the [Snakemake Plugin Catalog](https://snakemake.github.io/snakemake-plugin-catalog/plugins/executor/) for available options.
+- **`yq`**: This tool is needed only if you plan to use the `run.astra.sh` launcher script, which simplifies execution and configuration.
 
 ### Deployment of Astra
 Deploy the pipeline by specifying an output directory `my_work_dir` and a pipeline tag or branch:
@@ -64,7 +68,7 @@ Before running the pipeline, ensure that you edit the configuration files locate
 - `units.tsv`: Details about the technical units associated with each sample.
 - `reheader.tsv`: Optional file for reheadering sample identifiers.
 
-Refer to the [Configuration Details](#configuration-details) section for a comprehensive guide on editing these files.
+Refer to the [Configuration Details](./config/README.md) section for a comprehensive guide on editing these files.
 
 Once the configuration files are correctly set up, navigate to the deployed pipeline directory and execute the pipeline with:
 
